@@ -1,0 +1,39 @@
+{% extends '_layouts/cp' %}
+{% set title = 'SEO Settings'|t('seo') %}
+{% set selectedSubnavItem = 'settings' %}
+{% set fullPageForm = true %}
+
+{% set crumbs = [
+	{ label: 'SEO'|t('seo'), url: cpUrl('seo') },
+] %}
+
+{% set tabs = [
+	{
+		'label': 'Field'|t('app'),
+		'url': '#settings-field',
+	},
+	{
+		'label': 'Robots'|t('seo'),
+		'url': '#settings-robots',
+	}
+] %}
+
+{% block actionButton %}
+	<input type="hidden" name="action" value="plugins/save-plugin-settings">
+	<input type="hidden" name="pluginHandle" value="seo">
+	{{ redirectInput('seo/settings') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+	{% namespace 'settings' %}
+		<div id="field">
+			{% include 'seo/_settings/field' %}
+		</div>
+		<div id="robots" class="hidden">
+			Hello
+		</div>
+	{% endnamespace %}
+
+{% endblock %}

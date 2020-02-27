@@ -1,0 +1,17 @@
+{% extends '_layouts/cp' %}
+{% requirePermission 'manageRedirects' %}
+{% set title = 'Redirects'|t('seo') %}
+{% set selectedSubnavItem = 'redirects' %}
+{% set fullPageForm = true %}
+
+{% set crumbs = [
+	{ label: 'SEO'|t('seo'), url: cpUrl('seo') },
+] %}
+
+{% block actionButton %}{% endblock %}
+
+{% block content %}
+
+	hi
+
+{% endblock %}

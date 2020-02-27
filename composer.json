@@ -1,0 +1,31 @@
+{
+  "name": "ether/seokit",
+  "description": "The ultimate SEO toolkit for Craft CMS",
+  "version": "1.0.0",
+  "type": "craft-plugin",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "require": {
+    "craftcms/cms": "^3.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "ether\\seokit\\": "src/"
+    }
+  },
+  "support": {
+    "email": "help@ethercreative.co.uk",
+    "docs": "https://docs.ethercreative.co.uk/seokit",
+    "source": "https://github.com/ethercreative/seokit",
+    "issues": "https://github.com/ethercreative/seokit/issues"
+  },
+  "extra": {
+    "handle": "seokit",
+    "name": "SEOKit",
+    "developer": "Ether Creative",
+    "developerUrl": "https://ethercreative.co.uk",
+
+    "class": "ether\\seokit\\SEOKit",
+    "schemaVersion": "1.0.0"
+  }
+}
