@@ -6,7 +6,10 @@
   "license": "proprietary",
   "minimum-stability": "dev",
   "require": {
-    "craftcms/cms": "^3.4"
+    "php": "^7.2",
+    "craftcms/cms": "^3.4",
+    "ext-dom": "*",
+    "ext-libxml": "*"
   },
   "autoload": {
     "psr-4": {

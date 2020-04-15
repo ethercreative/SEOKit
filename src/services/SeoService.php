@@ -15,6 +15,7 @@ use DOMDocument;
 use DOMNode;
 use DOMNodeList;
 use DOMXPath;
+use ether\seokit\events\RegisterTopLevelElementEvent;
 use ether\seokit\models\SeoData;
 use Exception;
 use Twig\Error\LoaderError;
@@ -30,11 +31,23 @@ use Twig\Error\SyntaxError;
 class SeoService extends Component
 {
 
+	// Constants
+	// =========================================================================
+
 	const DOM_CONFIG =
 		LIBXML_HTML_NOIMPLIED |
 		LIBXML_HTML_NODEFDTD |
 		LIBXML_NOBLANKS |
 		LIBXML_COMPACT;
+
+	/**
+	 * Allows plugins to register top-level element handles that SEO will look
+	 * for when trying to find the SEO field.
+	 */
+	const EVENT_REGISTER_TOP_LEVEL_ELEMENT_HANDLE = 'seokitRegisterTopLevelElementHandle';
+
+	// Methods
+	// =========================================================================
 
 	/**
 	 * Will get the SEO field data from the given Twig context and field handle
@@ -55,10 +68,7 @@ class SeoService extends Component
 		$seo = null;
 
 		try {
-			if (isset($context[$handle]))
-			{
-				$seo = $context[$handle];
-			}
+			if (isset($context[$handle])) $seo = $context[$handle];
 			else
 			{
 				$handles = [
@@ -67,7 +77,9 @@ class SeoService extends Component
 					'category',
 				];
 
-				// TODO: Event to allow plugins to add their own top level element handles
+				$event = new RegisterTopLevelElementEvent(compact('handles'));
+				$this->trigger(self::EVENT_REGISTER_TOP_LEVEL_ELEMENT_HANDLE, $event);
+				$handles = $event->handles;
 
 				foreach ($handles as $elemHandle)
 				{
@@ -80,7 +92,10 @@ class SeoService extends Component
 					}
 				}
 			}
-		} catch (Exception $e) {}
+		} catch (Exception $e) {
+			Craft::error('Failed to find SEO variable', 'seokit');
+			Craft::error($e, 'seokit');
+		}
 
 		if (!($seo instanceof SeoData))
 			$seo = new SeoData();
